@@ -1,4 +1,4 @@
-import SearchForm from "../components/SearchForm";
+import SearchForm from "../../components/SearchForm";
 
 const Home: React.FC<THomeProps> = async ({ searchParams }) => {
     const query = (await searchParams).query;
