@@ -1,20 +1,13 @@
+/* eslint-disable @next/next/no-img-element */
 import { formatDate } from "@/lib/utils";
 import { EyeIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "./ui/button";
+import { Author, Startup } from "@/sanity/type";
 
 const StartupCard: React.FC<TStartupCardProps> = ({ post }) => {
-    const {
-        _createdAt,
-        views,
-        author: { _id: authorId, name },
-        title,
-        category,
-        _id,
-        image,
-        description,
-    } = post;
+    const { _createdAt, views, author, title, category, _id, image, description } = post;
 
     return (
         <li className="startup-card group">
@@ -29,8 +22,8 @@ const StartupCard: React.FC<TStartupCardProps> = ({ post }) => {
 
             <div className="flex-between mt-5 gap-5">
                 <div className="flex-1">
-                    <Link href={`/user/${authorId}`}>
-                        <p className="text-16-medium line-clamp-1">{name}</p>
+                    <Link href={`/user/${author?.id}`}>
+                        <p className="text-16-medium line-clamp-1">{author?.name}</p>
                     </Link>
 
                     <Link href={`/startup/${_id}`}>
@@ -38,7 +31,7 @@ const StartupCard: React.FC<TStartupCardProps> = ({ post }) => {
                     </Link>
                 </div>
 
-                <Link href={`/user/${authorId}`}>
+                <Link href={`/user/${author?.id}`}>
                     <Image src="https://placehold.co/600x400" alt="placeholder" width={48} height={48} className="rounded-full" />
                 </Link>
             </div>
@@ -49,7 +42,7 @@ const StartupCard: React.FC<TStartupCardProps> = ({ post }) => {
             </Link>
 
             <div className="flex-between gap-3 mt-5">
-                <Link href={`/?query=${category.toLowerCase()}`}>
+                <Link href={`/?query=${category?.toLowerCase()}`}>
                     <p className="text-16-medium">{category}</p>
                 </Link>
 
@@ -61,8 +54,10 @@ const StartupCard: React.FC<TStartupCardProps> = ({ post }) => {
     );
 };
 
+export type TStartupCard = Omit<Startup, "author"> & { author?: Author };
+
 type TStartupCardProps = {
-    post: any;
+    post: TStartupCard;
 };
 
 export default StartupCard;
