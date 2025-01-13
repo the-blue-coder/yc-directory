@@ -10,6 +10,7 @@ import { formSchema } from "@/lib/validation";
 import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
+import { createPitch } from "@/lib/actions";
 
 const StartupForm: React.FC = () => {
     const [errors, setErrors] = useState<Record<string, string>>({});
@@ -31,21 +32,17 @@ const StartupForm: React.FC = () => {
 
             await formSchema.parseAsync(formValues);
 
-            console.log(formValues);
+            const result = await createPitch(prevState, formData, pitch);
 
-            // const result = await createIdea(prevState, formData, pitch);
+            if (result.status === "SUCCESS") {
+                toast({
+                    title: "Success",
+                    description: "Your startup pitch has been created successfully",
+                });
+                router.push(`/startup/${result._id}`);
+            }
 
-            // console.log(result)
-
-            // if (result.status === "SUCCESS") {
-            //     toast({
-            //         title: "Success",
-            //         description: "Your startup pitch has been created successfully",
-            //     });
-            //     router.push(`/startup/${result.id}`);
-            // }
-
-            // return result;
+            return result;
         } catch (error) {
             if (error instanceof z.ZodError) {
                 const fieldErrors = error.flatten().fieldErrors;
