@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState, useActionState } from "react";
@@ -69,7 +70,7 @@ const StartupForm: React.FC = () => {
         }
     };
 
-    const [state, formAction, isPending] = useActionState(handleFormSubmit, { error: "", status: "INITIAL" });
+    const [, formAction, isPending] = useActionState(handleFormSubmit, { error: "", status: "INITIAL" });
 
     return (
         <form action={formAction} className="startup-form">
