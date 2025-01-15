@@ -33,7 +33,7 @@ const StartupCard: React.FC<TStartupCardProps> = ({ post }) => {
                 </div>
 
                 <Link href={`/user/${author?.id}`}>
-                    <Image src="https://placehold.co/600x400" alt="placeholder" width={48} height={48} className="rounded-full" />
+                    <Image src={author?.image as string} alt={author?.name as string} width={48} height={48} className="rounded-full" />
                 </Link>
             </div>
 

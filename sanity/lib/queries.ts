@@ -60,7 +60,8 @@ export const STARTUPS_BY_AUTHOR_QUERY = defineQuery(`
         author -> {
             _id,
             name,
-            bio
+            bio,
+            image
         },
         views,
         description,
