@@ -1,15 +1,15 @@
-import { auth } from "@/auth";
+import { StartupCardSkeleton } from "@/components/StartupCard";
 import UserStartups from "@/components/UserStartups";
 import { client } from "@/sanity/lib/client";
 import { AUTHOR_BY_GITHUB_ID_QUERY } from "@/sanity/lib/queries";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
 export const experimental_ppr = true;
 
 const User: React.FC<TUserProps> = async ({ params }) => {
     const id = (await params).id;
-    const session = await auth();
     const user = await client.fetch(AUTHOR_BY_GITHUB_ID_QUERY, { id });
 
     if (!user) {
@@ -35,7 +35,9 @@ const User: React.FC<TUserProps> = async ({ params }) => {
                     <p className="text-30-bold">Your startups</p>
 
                     <ul className="card_grid-sm">
-                        <UserStartups id={id} />
+                        <Suspense fallback={<StartupCardSkeleton />}>
+                            <UserStartups id={id} />
+                        </Suspense>
                     </ul>
                 </div>
             </section>

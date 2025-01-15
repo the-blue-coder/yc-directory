@@ -1,10 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
-import { formatDate } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
 import { EyeIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { Author, Startup } from "@/sanity/type";
+import { Skeleton } from "./ui/skeleton";
 
 const StartupCard: React.FC<TStartupCardProps> = ({ post }) => {
     const { _createdAt, views, author, title, category, _id, image, description } = post;
@@ -51,6 +52,18 @@ const StartupCard: React.FC<TStartupCardProps> = ({ post }) => {
                 </Button>
             </div>
         </li>
+    );
+};
+
+export const StartupCardSkeleton: React.FC = () => {
+    return (
+        <>
+            {[0, 1, 2, 3, 4].map((index) => (
+                <li key={cn("skeleton", index)}>
+                    <Skeleton className="startup-card_skeleton" />
+                </li>
+            ))}
+        </>
     );
 };
 
